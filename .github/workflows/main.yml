@@ -1,0 +1,27 @@
+name: Server
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: docker build -t echo_server . 
+
+    - name: Test Docker container
+      run: |
+        chmod +x test.sh 
+        ./test.sh
+
